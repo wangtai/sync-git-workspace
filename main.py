@@ -54,7 +54,7 @@ def import_repos(path):
             import os
             os.makedirs(os.path.join(path, name), exist_ok=True)
             os.chdir(os.path.join(path, name))
-            os.system('git clone ' + url)
+            os.system('git clone ' + url + ' .')
 
 
 # Press the green button in the gutter to run the script.
