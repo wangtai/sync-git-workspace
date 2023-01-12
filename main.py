@@ -40,12 +40,31 @@ def export(path):
 
     print(repos)
 
+    with open('export.json', 'w') as f:
+        f.write(str(repos).replace("'", '"'))
+
+
+def import_repos(path):
+    import json
+    with open('import.json', 'r') as f:
+        repos = json.load(f)
+        print(repos)
+        for name, url in repos.items():
+            print(name, url)
+            import os
+            os.makedirs(os.path.join(path, name), exist_ok=True)
+            os.chdir(os.path.join(path, name))
+            os.system('git clone ' + url)
+
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='set workspace path')
+    parser.add_argument('--action', type=str, help='export or import')
     parser.add_argument('--path', type=str, help='workspace path')
     args = parser.parse_args()
     # print(args.path)
-
-    export(args.path)
+    if args.action == 'export':
+        export(args.path)
+    elif args.action == 'import':
+        import_repos(args.path)
