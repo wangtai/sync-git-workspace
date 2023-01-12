@@ -51,10 +51,17 @@ def import_repos(path):
         print(repos)
         for name, url in repos.items():
             print(name, url)
-            import os
-            os.makedirs(os.path.join(path, name), exist_ok=True)
-            os.chdir(os.path.join(path, name))
-            os.system('git clone ' + url + ' .')
+            full_path = os.path.join(path, name)
+
+            if os.path.isdir(full_path):
+                import os
+                os.chdir(full_path)
+                os.system('git pull')
+            else:
+                import os
+                os.makedirs(full_path, exist_ok=True)
+                os.chdir(full_path)
+                os.system('git clone ' + url + ' .')
 
 
 # Press the green button in the gutter to run the script.
