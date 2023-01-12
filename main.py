@@ -15,7 +15,11 @@ def export(path):
     repos = {}
     for dir in os.listdir(path):
         # print(dir)
+        if dir == '.DS_Store':
+            continue
         full_path = os.path.join(path, dir)
+        if not os.path.isdir(full_path):
+            continue
         import git
 
         g = git.cmd.Git(full_path)
